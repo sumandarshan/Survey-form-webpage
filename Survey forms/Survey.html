@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey</title>
+
+    <style>
+        body{
+            background-image: url("survey.jpg");
+            background-size: 100%;
+            
+        }
+        h1{
+            text-align: center;
+            color: rgb(58, 22, 22);
+            text-shadow: 1px 0.5px;
+            text-decoration-line: underline;
+        }
+        hr {
+            position: relative;
+            top: 0.5px;
+            border: none;
+            height: 0.5px;
+            background: black;
+            /* margin-bottom: 50px; */
+        }
+
+        button {
+    background-color: #e97dc5;
+    color: rgb(6, 5, 5);
+    border: none;
+    font-size: 14px; /* Adjust the font size as desired */
+    padding: 8px 16px; /* Adjust the padding to increase the button size */
+}
+
+button:hover {
+    background-color: #38aff8;
+} 
+ 
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* //height: 100vh; Set height to 100% of the viewport height for vertical centering */
+}
+
+.logout-button {
+    background-color: #38aff8;
+    color: rgb(6, 5, 5);
+    border: none;
+    font-size: 18px;
+    padding: 8px 16px;
+}
+
+.logout-button:hover{
+    background-color:#b90e80;
+}
+        
+    </style>
+</head>
+<body>
+    
+    <h1>SURVEY FORMS</h1>
+    <br>
+        <hr>
+        <hr>
+
+    <label for="a"> <h2>Health</h2></label>
+    <a href="Health.html"><button>Click Here</button></a>
+    <br>
+    <hr>
+    <hr>
+    <label for="b"><h2>Travel</h2></label>
+    <a href="Travel.html"><button>Click Here</button></a>
+    <br>
+    <hr>
+    <hr>
+    <label for="c"><h2>Courses Offered</h2></label>
+    <a href="Courses_Offered.html"><button >Click Here</button></a>
+    <br>
+    <hr>
+    <hr>
+<br>
+
+
+
+    <fieldset>
+        <legend>
+            <h2>Health Data</h2>
+        </legend>
+        <table border="4" bordercolor="black" id="table" >
+            <tr>
+                <th class="col">Name</th>
+                <th class="col">Age</th>
+                <th class="col">Gender</th>
+                <th class="col">Email</th>
+                <th class="col">Phone number</th>
+                <th class="col">Blood pressure</th>
+                <th class="col">HR</th>
+                <th class="col">Symptoms</th>
+                <th class="col">Weight (cm)</th>
+                <th class="col">Height(cm)</th>
+                <th class="col">Allergies</th>
+                <th class="col">Current medications</th>
+         
+                </tr>
+
+        </table>
+    </fieldset>
+
+    <fieldset>
+        <legend>
+            <h2>Travel Data</h2>
+        </legend>
+        <table border="4" bordercolor="black" id="table1">
+                    <tr>
+                        <th class="col">Name</th>
+                        <th class="col">Email</th>
+                        <th class="col">PhoneNumber</th>
+                        <th class="col">Age</th>
+                        <th class="col">Place</th>
+                        <th class="col">Type of Stay</th>
+                        <th class="col">Contact</th>
+                        <th class="col">Info</th>
+                        </tr>       
+        </table>
+      </fieldset>
+
+    <fieldset>
+        <legend>
+            <h2>Course Offered Data</h2>
+        </legend>
+        <table border="4" bordercolor="black" id="table2">
+                    <tr>
+                        <th class="col">Name</th>
+                        <th class="col">Email</th>
+                        <th class="col">Phone Number</th>
+                        <th class="col">Age</th>
+                        <th class="col">Role</th>
+                        <th class="col">Interested Areas</th>
+                        <th class="col">Other info</th>
+                       
+                        </tr>       
+        </table>
+    </fieldset>
+    <br>
+    <br>
+    <div class="center">
+        <a href="Login.html">
+            <button class="logout-button">LOG OUT</button>
+        </a>
+    </div>
+
+    
+   
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    
+        insert();
+        insert1();
+        insert2();
+
+    });
+    
+
+
+     function insert(){
+        var sessionData=JSON.parse(sessionStorage.getItem("user"))  || [];
+    const userDataArray = JSON.parse(localStorage.getItem("details")) || [];
+    for(let j of sessionData){
+        for(let i of userDataArray){
+            if(j.username===i.name && i.health.name!=undefined){
+                var table = document.getElementById("table");
+                var newRow = table.insertRow();
+
+    newRow.insertCell(0).innerHTML = i.health.name;
+    newRow.insertCell(1).innerHTML = i.health.age;
+    newRow.insertCell(2).innerHTML = i.health.gender;
+    newRow.insertCell(3).innerHTML = i.health.email;
+    newRow.insertCell(4).innerHTML = i.health.phoneNumber;
+    newRow.insertCell(5).innerHTML = i.health.bloodPressure;
+    newRow.insertCell(6).innerHTML = i.health.heartRate;
+    newRow.insertCell(7).innerHTML = i.health.symptoms;
+    newRow.insertCell(8).innerHTML = i.health.weight;
+    newRow.insertCell(9).innerHTML = i.health.height;
+    newRow.insertCell(10).innerHTML = i.health.allergies;
+    newRow.insertCell(11).innerHTML = i.health.medications;
+    
+            }
+        }
+    }
+}
+
+function insert1(){
+        var sessionData=JSON.parse(sessionStorage.getItem("user"))  || [];
+    const userDataArray = JSON.parse(localStorage.getItem("details")) || [];
+    for(let j of sessionData){
+        for(let i of userDataArray){
+            if(j.username===i.name && i.travel.name!=undefined){
+                var table = document.getElementById("table1");
+                var newRow = table.insertRow();
+    newRow.insertCell(0).innerHTML = i.travel.name;
+    newRow.insertCell(1).innerHTML = i.travel.email;
+    newRow.insertCell(2).innerHTML = i.travel.phoneNumber;
+    newRow.insertCell(3).innerHTML = i.travel.age;
+    newRow.insertCell(4).innerHTML = i.travel.place;
+    newRow.insertCell(5).innerHTML = i.travel.stay;
+    newRow.insertCell(6).innerHTML = i.travel.contact;
+    newRow.insertCell(7).innerHTML = i.travel.info;
+    
+            }
+        }
+    }
+}
+
+function insert2(){
+        var sessionData=JSON.parse(sessionStorage.getItem("user"))  || [];
+    const userDataArray = JSON.parse(localStorage.getItem("details")) || [];
+    for(let j of sessionData){
+        for(let i of userDataArray){
+            if(j.username===i.name && i.course.name!=undefined){
+                var table = document.getElementById("table2");
+                var newRow = table.insertRow();
+    newRow.insertCell(0).innerHTML = i.course.name;
+    newRow.insertCell(1).innerHTML = i.course.email;
+    newRow.insertCell(2).innerHTML = i.course.phoneNumber;
+    newRow.insertCell(3).innerHTML = i.course.age;
+    newRow.insertCell(4).innerHTML = i.course.role;
+    newRow.insertCell(5).innerHTML = i.course.areas;
+    newRow.insertCell(6).innerHTML = i.course.txtarea;
+                
+    
+            }
+        }
+    }
+}
+
+
+
+    </script>
+</body>
+</html>

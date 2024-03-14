@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Survey Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-image: url("health.jpg");
+            background-size: 100%;
+            background-attachment: fixed;
+        }
+
+        form {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #3313e4;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0e3609;
+        }
+    </style>
+</head>
+<body>
+
+    <form id="form">
+        <h1>Health Survey Form</h1>
+
+        <!-- Personal Information -->
+        <label for="fullName">Full Name:</label>
+        <input type="text" id="fullName" name="fullName" required>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" maxlength="3" required>
+
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender" required>
+            <!-- <option value="" selected></option> -->
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+        </select>
+
+        <!-- Contact Information -->
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required placeholder="e.g.,xyz@gmail.com">
+
+        <label for="phone">Phone Number:</label>
+        <input type="number" id="phone" name="phone" required placeholder="mobile number" maxlength="10">
+
+        <!-- Health Information -->
+        <label for="bloodPressure">Blood Pressure:</label>
+        <input type="text" id="bloodPressure" name="bloodPressure" placeholder="e.g., 120/80" required>
+
+        <label for="heartRate">Heart Rate (bpm):</label>
+        <input type="number" id="heartRate" name="heartRate" required>
+
+        <label for="symptoms">Symptoms:</label>
+        <textarea id="symptoms" name="symptoms" rows="4" required></textarea>
+
+        <!-- Additional Health Parameters -->
+        <label for="weight">Weight (kg):</label>
+        <input type="number" id="weight" name="weight"  required>
+
+        <label for="height">Height (cm):</label>
+        <input type="number" id="height" name="height" required>
+
+        <label for="allergies">Allergies:</label>
+        <input type="text" id="allergies" name="allergies">
+
+        <label for="medications">Current Medications:</label>
+        <textarea id="medications" name="medications" placeholder="Enter your medications here" rows="4"></textarea>
+
+
+        <!-- Submit Button -->
+        <button onclick="Health()" id="submit" type="submit">Submit</button>
+    </form>
+
+
+    <fieldset>
+        <legend>
+            <h2>Health Data</h2>
+        </legend>
+        <table border="4" bordercolor="black" id="table" >
+            <tr>
+                <th class="col">Name</th>
+                <th class="col">Age</th>
+                <th class="col">Gender</th>
+                <th class="col">Email</th>
+                <th class="col">Phone number</th>
+                <th class="col">Blood pressure</th>
+                <th class="col">HR</th>
+                <th class="col">Symptoms</th>
+                <th class="col">Weight (cm)</th>
+                <th class="col">Height(cm)</th>
+                <th class="col">Allergies</th>
+                <th class="col">Current medications</th>
+                <th class="col">Action</th>
+                </tr>
+
+        </table>
+    </fieldset>
+
+
+
+<script>
+
+    window.onload = function() {
+        insert()
+    }
+    var row = null;
+    var srow=null; i.health.name = document.getElementById("fullName").value;
+                i.health.age = document.getElementById("age").value;
+                i.health.gender = document.getElementById("gender").value;
+                i.health.email = document.getElementById("email").value;
+                i.health.phoneNumber = document.getElementById("phone").value;
+                i.health.bloodPressure = document.getElementById("bloodPressure").value;
+                i.health.heartRate = document.getElementById("heartRate").value;
+  
+
+function Health(){
+    var sessionData=JSON.parse(sessionStorage.getItem("user"))  || [];
+    var userDataArray = JSON.parse(localStorage.getItem("details")) || [];
+    for(let j of sessionData){
+        for(let i of userDataArray){
+            if(j.username===i.name){
+                             i.health.symptoms = document.getElementById("symptoms").value;
+                i.health.weight = document.getElementById("weight").value;
+                i.health.height = document.getElementById("height").value;
+                i.health.allergies = document.getElementById("allergies").value;
+                i.health.medications = document.getElementById("medications").value;           
+            }
+        }
+    }
+    localStorage.setItem("details",JSON.stringify(userDataArray))
+    window.location.href="Survey.html"
+
+
+}
+
+var form = document.getElementById("form")
+
+form.addEventListener("submit",e=>{
+    e.preventDefault();
+})
+//Insert function
+function insert(){
+        var sessionData=JSON.parse(sessionStorage.getItem("user"))  || [];
+    const userDataArray = JSON.parse(localStorage.getItem("details")) || [];
+    for(let j of sessionData){
+        for(let i of userDataArray){
+            if(j.username===i.name && i.health.name!=undefined){
+                var table = document.getElementById("table");
+                var newRow = table.insertRow();
+
+    newRow.insertCell(0).innerHTML = i.health.name;
+    newRow.insertCell(1).innerHTML = i.health.age;
+    newRow.insertCell(2).innerHTML = i.health.gender;
+    newRow.insertCell(3).innerHTML = i.health.email;
+    newRow.insertCell(4).innerHTML = i.health.phoneNumber;
+    newRow.insertCell(5).innerHTML = i.health.bloodPressure;
+    newRow.insertCell(6).innerHTML = i.health.heartRate;
+    newRow.insertCell(7).innerHTML = i.health.symptoms;
+    newRow.insertCell(8).innerHTML = i.health.weight;
+    newRow.insertCell(9).innerHTML = i.health.height;
+    newRow.insertCell(10).innerHTML = i.health.allergies;
+    newRow.insertCell(11).innerHTML = i.health.medications;
+    newRow.insertCell(12).innerHTML = `<button onclick="edit()">Edit</button> 
+                                   <button onclick="remove()">Delete</button>`;
+   
+            }
+        }
+    }
+}
+
+// Edit function
+
+function edit()
+{
+    var sessionData=JSON.parse(sessionStorage.getItem("user"))  || [];
+    var userDataArray = JSON.parse(localStorage.getItem("details")) || [];
+    for(let j of sessionData){
+        for(let i of userDataArray){
+            if(j.username===i.name ){
+   
+    document.getElementById("fullName").value = i.health.name;
+    document.getElementById("age").value =i.health.age;
+    document.getElementById("gender").value = i.health.gender;
+    document.getElementById("email").value = i.health.email;
+    document.getElementById("phone").value = i.health.phoneNumber;
+    document.getElementById("bloodPressure").value = i.health.bloodPressure;
+    document.getElementById("heartRate").value = i.health.heartRate;
+    document.getElementById("symptoms").value = i.health.symptoms;
+    document.getElementById("weight").value = i.health.weight;
+    document.getElementById("height").value = i.health.height;
+    document.getElementById("allergies").value = i.health.allergies;
+    document.getElementById("medications").value = i.health.medications;
+            }
+        }
+    }
+}
+
+// Delete function
+function remove() {
+    var sessionData=JSON.parse(sessionStorage.getItem("user"))  || [];
+    var userDataArray = JSON.parse(localStorage.getItem("details")) || [];
+    for(let j of sessionData){
+        for(let i of userDataArray){
+            if(j.username===i.name){
+                i.health = {}
+            }
+        }
+    }
+    localStorage.setItem("details", JSON.stringify(userDataArray));
+    var table = document.getElementById("table")
+    var rowCount = table.rows.length;
+    for(var t = rowCount-1;t>0;t--)
+    {
+        table.deleteRow(t)
+    }
+
+   
+}
+
+</script> 
+</body>
+</html>
+
+
+
+
+

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Travel Survey</title>
+    <h1>Travel Survey Form</h1>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-image: url("Travel.jpg");
+            background-attachment: fixed;
+        }
+
+        form {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #af3d08;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor:auto;
+        }
+
+        button:hover {
+            background-color: #451bdd;
+        }
+    </style>
+  
+</head>
+
+<body id="main">
+    <!-- <link rel="stylesheet" href="C:\Users\Gaganashree\Downloads\travel.css"> -->
+
+  <br>
+  <div>
+    <center><i><h3 id="description"> Do you love to travel? Want to see more of the world?<br> Please complete our below survey to help us find better deals for you!</h3></i></center>
+  </div>
+
+  <form id="form">
+  <br>
+  <form id="form">
+    
+    <label id="name-label">Name</label><br>
+    <input id="name" type="text" placeholder="Enter Full Name" size="50" required>
+    <br>
+    <label id="email-label">Email</label><br>
+    <input id="email" type="email" placeholder="Enter Email Address (eg,. xyz@gmail.com)" required>
+    <br>
+    <label id="number-label">Contact number</label><br>
+    <input id="number" type="number" placeholder="Enter Contact number"  maxlength="10" width="50" required>
+    <br>
+    <label id="number-label">Age</label><br>
+    <input id="age" type="number" placeholder="Age" maxlength="3" required><br>
+
+    <label name="">What places are you most likely to visit next?<br></label>
+                    <select id="place">
+                        <option value="Kashmir">Kashmir</option>
+                        <option value="Ooty">Ooty</option>
+                        <option value="Manali">Manali</option>
+                        <option value="Goa">Goa</option>
+                        <option value="Coorg">Coorg</option>
+                        <option value="Rajasthan">Rajasthan</option>
+                        <option value="Lakshadweep">Lakshadweep</option>
+                    </select>
+                
+
+    <br><label name="">Please select the types of holidays that you are interested in?</label>
+                    <select id="stay">
+                        <option value="Camping">Camping</option>
+                        <option value="Cruise">Cruise</option>
+                        <option value="Backpacking">Backpacking</option>
+                        <option value="Luxury-Hotel">Luxury-Hotel</option>
+                        <option value="Coach">Coach</option>  
+                    </select>
+
+    <br><label name="">Can we contact you?</label><br>
+                    <select id="contact" >
+                      <option value="Yes, I would like to Contact">Yes, I would like to Contact</option>
+                      <option value="No, Not Interested">No, Not Interested</option>
+                    </select>
+
+    <br><label name="">Any Other informtion</label>
+    <textarea id="info" placeholder="Insert text here ..." required></textarea>
+    <button onclick="Travel()" id="submit" type="submit" size="50"><b>Submit</b></button>
+    <br>
+    <br>
+
+</form>
+<fieldset>
+  <legend>
+      <h2>List Display</h2>
+  </legend>
+  <table border="4" bordercolor="black" id="table">
+              <tr>
+                  <th class="col">Name</th>
+                  <th class="col">Email</th>
+                  <th class="col">PhoneNumber</th>
+                  <th class="col">Age</th>
+                  <th class="col">Place</th>
+                  <th class="col">Type of Stay</th>
+                  <th class="col">Contact</th>
+                  <th class="col">Info</th>
+                  <th class="col">action</th>
+                  </tr>       
+  </table>
+</fieldset>
+      
+
+<script>
+
+window.onload = function() {
+        insert()
+    }
+    var row = null;
+    var srow=null;
+function Travel(){
+    var sessionData=JSON.parse(sessionStorage.getItem("user"))  || [];
+    var userDataArray = JSON.parse(localStorage.getItem("details")) || [];
+    for(let j of sessionData){
+        for(let i of userDataArray){
+            if(j.username===i.name){
+                i.travel.name = document.getElementById("name").value;
+                i.travel.email = document.getElementById("email").value;
+                i.travel.phoneNumber= document.getElementById("number").value;
+                i.travel.age= document.getElementById("age").value;
+                i.travel.place= document.getElementById("place").value;
+                i.travel.stay= document.getElementById("stay").value;
+                i.travel.contact= document.getElementById("contact").value;
+                i.travel.info= document.getElementById("info").value;
+                
+            }
+        }
+    }
+    localStorage.setItem("details",JSON.stringify(userDataArray))
+    window.location.href="Survey.html"
+    
+
+}
+
+var form = document.getElementById("form")
+form.addEventListener("submit",e=>{
+    e.preventDefault();
+})
+function insert(){
+        var sessionData=JSON.parse(sessionStorage.getItem("user"))  || [];
+    const userDataArray = JSON.parse(localStorage.getItem("details")) || [];
+    for(let j of sessionData){
+        for(let i of userDataArray){
+            if(j.username===i.name && i.travel.name!=undefined){
+                var table = document.getElementById("table");
+                var newRow = table.insertRow();
+
+    newRow.insertCell(0).innerHTML = i.travel.name;
+    newRow.insertCell(1).innerHTML = i.travel.email;
+    newRow.insertCell(2).innerHTML = i.travel.phoneNumber;
+    newRow.insertCell(3).innerHTML = i.travel.age;
+    newRow.insertCell(4).innerHTML = i.travel.place;
+    newRow.insertCell(5).innerHTML = i.travel.stay;
+    newRow.insertCell(6).innerHTML = i.travel.contact;
+    newRow.insertCell(7).innerHTML = i.travel.info;
+    newRow.insertCell(8).innerHTML = `<button onclick="edit()">Edit</button> 
+                                   <button onclick="remove()">Delete</button>`;
+
+    
+            }
+        }
+    }
+}
+
+// Edit function
+
+function edit()
+{
+    var sessionData=JSON.parse(sessionStorage.getItem("user"))  || [];
+    var userDataArray = JSON.parse(localStorage.getItem("details")) || [];
+    for(let j of sessionData){
+        for(let i of userDataArray){
+            if(j.username===i.name ){
+   
+                document.getElementById("name").value = i.travel.name;
+document.getElementById("email").value =i.travel.email;
+document.getElementById("number").value =  i.travel.phoneNumber;
+document.getElementById("age").value =i.travel.age;
+document.getElementById("place").value = i.travel.place;
+document.getElementById("stay").value = i.travel.stay;
+document.getElementById("contact").value = i.travel.contact;
+document.getElementById("info").value = i.travel.info;
+            }
+        }
+    }
+}
+
+// // Delete function
+function remove() {
+    var sessionData=JSON.parse(sessionStorage.getItem("user"))  || [];
+    var userDataArray = JSON.parse(localStorage.getItem("details")) || [];
+    for(let j of sessionData){
+        for(let i of userDataArray){
+            if(j.username===i.name){
+
+
+                i.travel = {}
+            }
+        }
+    }
+    localStorage.setItem("details", JSON.stringify(userDataArray));
+    var table = document.getElementById("table")
+    var rowCount = table.rows.length;
+    for(var t = rowCount-1;t>0;t--)
+    {
+        table.deleteRow(t)
+    }
+
+   
+}
+
+
+
+// var row = null;
+// function Travel(){
+
+// var dataEntered = createData();
+// //    document.getElementById("submit").innerHTML=typeof(dataEntered);
+// if (dataEntered === false){
+//   document.getElementById("submit").innerText = "Enter all the fields";
+// }
+// else{
+  
+//   // Retrieve existing data from local storage
+//   var existingData = JSON.parse(localStorage.getItem("tableTravel")) || [];
+
+//   // To insert data into the table
+//   if (row === null) {
+//       existingData.push(dataEntered);
+//       insert(dataEntered);
+//       document.getElementById("submit").innerHTML = "Data inserted";
+//   } else {
+//       // Update existing data
+//       existingData[row.rowIndex - 1] = dataEntered;
+//       update();
+//       document.getElementById("submit").innerHTML = "Data updated";
+//   }
+
+//   // Store the updated data in local storage
+//   localStorage.setItem("tableTravel", JSON.stringify(existingData));
+// } 
+
+// document.getElementById("form").reset();
+
+// }
+// var form = document.getElementById("form");
+
+// form.addEventListener("submit", (e) => {
+// e.preventDefault();});
+
+
+
+// //Pulling data from form and saving into variables name, age, email
+// function createData(){
+// var name = document.getElementById("name").value;
+// var email = document.getElementById("email").value;
+// var phoneNumber= document.getElementById("number").value;
+// var age= document.getElementById("age").value;
+// var place= document.getElementById("place").value;
+// var stay= document.getElementById("stay").value;
+// var contact= document.getElementById("contact").value;
+// var info= document.getElementById("info").value;
+// if (name === "" || email === "" || phoneNumber ==="" || age === "" || place === "" || stay==="" || contact ==="" || info ===""){
+// //document.getElementById("submit").innerText = "Enter all the fields";
+// return false;
+// }
+// else{
+// //document.getElementById("submit").innerHTML =  name + " "+ age+ " "+ email; 
+// return {name,email,phoneNumber,age,place,stay,contact,info};
+// }
+// }
+
+// // Insert data into the table
+// function insert(dataEntered) {
+// var table = document.getElementById("table");
+// var newRow = table.insertRow();
+
+// newRow.insertCell(0).innerHTML = dataEntered.name;
+// newRow.insertCell(1).innerHTML = dataEntered.email;
+// newRow.insertCell(2).innerHTML = dataEntered.phoneNumber;
+// newRow.insertCell(3).innerHTML = dataEntered.age;
+// newRow.insertCell(4).innerHTML = dataEntered.place;
+// newRow.insertCell(5).innerHTML = dataEntered.stay;
+// newRow.insertCell(6).innerHTML = dataEntered.contact;
+// newRow.insertCell(7).innerHTML = dataEntered.info;
+// newRow.insertCell(8).innerHTML = `<button onclick="edit(this)">Edit</button> 
+//                              <button onclick="remove(this)">Delete</button>`;
+// }
+
+
+// // Edit function
+// function edit(td) {
+// row = td.parentElement.parentElement;
+// document.getElementById("name").value = row.cells[0].innerHTML;
+// document.getElementById("email").value = row.cells[1].innerHTML;
+// document.getElementById("number").value = row.cells[2].innerHTML;
+// document.getElementById("age").value = row.cells[3].innerHTML;
+// document.getElementById("place").value = row.cells[4].innerHTML;
+// document.getElementById("stay").value = row.cells[5].innerHTML;
+// document.getElementById("contact").value = row.cells[6].innerHTML;
+// document.getElementById("info").value = row.cells[7].innerHTML;
+
+// }
+
+// // Update function
+// function update() {
+// row.cells[0].innerHTML = document.getElementById("name").value;
+// row.cells[1].innerHTML = document.getElementById("email").value;
+// row.cells[2].innerHTML = document.getElementById("number").value;
+// row.cells[3].innerHTML = document.getElementById("age").value;
+// row.cells[4].innerHTML = document.getElementById("place").value;
+// row.cells[5].innerHTML = document.getElementById("stay").value;
+// row.cells[6].innerHTML = document.getElementById("contact").value;
+// row.cells[7].innerHTML = document.getElementById("info").value;
+
+// row = null;
+// }
+
+// // Delete function
+// function remove(td) {
+// row = td.parentElement.parentElement;
+// document.getElementById("table").deleteRow(row.rowIndex);
+
+
+// // Remove the corresponding data from local storage
+// var existingData = JSON.parse(localStorage.getItem("tableTravel")) || [];
+// existingData.splice(row.rowIndex - 1, 1);
+// localStorage.setItem("tableTravel", JSON.stringify(existingData));
+
+// row = null;
+// }
+
+// // Populate table on page load
+// document.addEventListener("DOMContentLoaded", function () {
+// var existingData = JSON.parse(localStorage.getItem("tableTravel")) || [];
+// existingData.forEach(function (data) {
+// insert(data);
+// });
+
+// });
+</script>
+</body>
+
+ </html>
+</body>
+
+
+
+
+
+               

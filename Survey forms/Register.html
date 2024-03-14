@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url("reg1.jpg");
+    /* background-position: left; */
+    /* background-size:900px 600px ;  */
+    background-repeat: no-repeat;
+    background-size: 100%;
+    }
+
+form{
+    margin:auto;
+    padding:10%;
+    /* display: flex;
+    flex-direction: column; */
+    align-items: center;
+    max-width:200%;
+}
+
+#signupForm {
+    background-color: #f4f4f4f7;
+    padding: 70px;
+    border-radius: 8px;
+    /* box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1); */
+}
+
+input[type="text"],
+input[type="password"],
+input[type="submit"]
+input [type="number"],
+input [type="email"]
+{
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #fdfafa;
+    border-radius: 3px;
+    /* box-sizing: border-box; */
+}
+
+button {
+            background-color: #0b633a;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+<body>
+    <form id="signupForm">
+        <h2>Registration Form</h2>
+
+        <input type="text" id="username" placeholder="Username" required>
+        <br><input type="password" id="password" placeholder="Password" required>
+        <br><input type="text" id="email" placeholder="Email" required>
+        <center><br><button type="submit">Signup</button></center>
+    </div>
+      </form>  
+      <script>
+
+        document.getElementById('signupForm').addEventListener('submit',function(e){
+            e.preventDefault();
+            //Get User Input
+            var name=document.getElementById("username").value;
+            var password=document.getElementById("password").value;
+        
+          //Create and Retrieve array from local storage
+        var userDataArray = JSON.parse(localStorage.getItem('details'))  || [];
+        
+        if(userDataArray.some(user=> user.name===name)){
+            alert("Username already exists try different username");
+        }
+        else{
+         
+        //Add new data to array
+        userDataArray.push({name,password,health:{},course:{},travel:{}});
+        }
+        //Store the updated data in local storage
+        localStorage.setItem('details',JSON.stringify(userDataArray));
+
+        alert('Register successful')
+
+        //Redirect to login page
+        window.location.href='Login.html'
+
+        }
+            );             
+            </script>
+</body>
+</html>

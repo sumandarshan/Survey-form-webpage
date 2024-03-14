@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="loginForm">
+        <center><h1><b>Login Details</b></h1></center>
+        <form id="login-form" onsubmit="login(event)">
+            <input type="text" id="name" placeholder="Username">
+            <input type="password" id="pswd" placeholder="Password">
+            <input type="submit" value="Login" onclick="login()">
+        </form>
+        <h2><a href="Register.html">New Register</a></h2>
+    </div>
+
+    <script>
+        var srow=null
+        var row=null
+        function login(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+            sessionStorage.clear();
+
+            const userDataArray = JSON.parse(localStorage.getItem("details")) || [];
+            const username = document.getElementById("name").value;
+            const password = document.getElementById("pswd").value;
+            var flag=false
+            for(let i of userDataArray){
+                if(username===i.name && password===i.password){
+                    window.location.href = 'Survey.html';
+                    var sessionData=JSON.parse(sessionStorage.getItem("user")) || [];
+                    if(srow===null){
+                        sessionData.push({username,password})
+                        alert("Login successful");
+                    }
+                    sessionStorage.setItem("user",JSON.stringify(sessionData))
+                    flag=true
+
+                }
+
+            }
+            if(flag==false){
+                alert("Invalid username or password");
+            }
+            return[username,password]
+        }
+    
+    </script>
+</body>
+</html>
+

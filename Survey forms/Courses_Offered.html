@@ -1,0 +1,207 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses Offered</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-image: url("Course.jpg");
+            background-repeat: no-repeat;
+            background-size: 100%;
+            background-attachment: fixed;
+
+        }
+
+        form {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color:rgb(21, 3, 87); 
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor:auto;
+        }
+
+        button:hover {
+            background-color: #048609;
+        }
+    </style>
+</head>
+<body>
+    <form id="form">
+        <h1>Courses Offered Survey Form</h1>
+    <label id="name-label">Name</label><br>
+    <input id="name" type="text" placeholder="Enter Full Name" size="50" required>
+    <br>
+    <label id="email-label">Email</label><br>
+    <input id="email" type="email" placeholder="Enter Email Address (eg,. xyz@gmail.com)" size="50" required>
+    <br>
+    <label id="number-label">Contact number</label><br>
+    <input id="number" type="number" placeholder="Enter Contact number"  maxlength="10" width="50" required>
+    <br>
+    <label id="number-label">Age</label><br>
+    <input id="age" type="number" placeholder="Age" maxlength="3" required><br>
+
+    <label name="">Which option best describes your current role </label>
+                <select id="role">
+                    <option value="Student ">Student</option>
+                    <option value="Job Holder ">Job Holder</option>
+                    <option value="Graduated ">Graduated</option>
+                </select> 
+
+    <label name="">Interested Areas</label>
+                <select id="areas">
+                    <option value="Front-end ">Front-end</option>
+                    <option value="Back-end ">Back-end</option>
+                    <option value=" Data Visualization">Data Visualization</option>
+                    <option value="Full-Stack ">Full-Stack</option>
+                    <option value="Manual Testing ">Manual Testing</option>  
+                </select> 
+
+        <br><label name="">Any Other informtion</label>
+        <textarea id="txtarea" placeholder="Insert text here ..." required></textarea>
+        <br><button onclick="Course()" id="submit" type="submit" size="50"><b>Submit</b></button>
+    </form>
+        <fieldset>
+            <legend>
+                <h2>List Display</h2>
+            </legend>
+            <table border="4" bordercolor="black" id="table">
+                        <tr>
+                            <th class="col">Name</th>
+                            <th class="col">Email</th>
+                            <th class="col">Phone Number</th>
+                            <th class="col">Age</th>
+                            <th class="col">Role</th>
+                            <th class="col">Interested Areas</th>
+                            <th class="col">Info</th>
+                            <th class="col">action</th>
+                            </tr>       
+            </table>
+        </fieldset>
+                
+
+<script>
+    window.onload = function() {
+        insert()
+    }
+    var row = null;
+    var srow=null;
+function Course(){
+    var sessionData=JSON.parse(sessionStorage.getItem("user"))  || [];
+    var userDataArray = JSON.parse(localStorage.getItem("details")) || [];
+    for(let j of sessionData){
+        for(let i of userDataArray){
+            if(j.username===i.name){
+                i.course.name = document.getElementById("name").value;
+                i.course.email = document.getElementById("email").value;
+                i.course.phoneNumber= document.getElementById("number").value;
+                i.course.age= document.getElementById("age").value;
+                i.course.role= document.getElementById("role").value;
+                i.course.areas= document.getElementById("areas").value;
+                i.course.txtarea= document.getElementById("txtarea").value;
+                
+            }
+        }
+    }
+    localStorage.setItem("details",JSON.stringify(userDataArray))
+    window.location.href="Survey.html"
+    
+
+}
+
+var form = document.getElementById("form")
+form.addEventListener("submit",e=>{
+    e.preventDefault();
+})
+
+//Insert function
+function insert(){
+        var sessionData=JSON.parse(sessionStorage.getItem("user"))  || [];
+    const userDataArray = JSON.parse(localStorage.getItem("details")) || [];
+    for(let j of sessionData){
+        for(let i of userDataArray){
+            if(j.username===i.name && i.course.name!=undefined){
+                var table = document.getElementById("table");
+                var newRow = table.insertRow();
+
+    newRow.insertCell(0).innerHTML = i.course.name;
+    newRow.insertCell(1).innerHTML = i.course.email;
+    newRow.insertCell(2).innerHTML = i.course.phoneNumber;
+    newRow.insertCell(3).innerHTML = i.course.age;
+    newRow.insertCell(4).innerHTML = i.course.role;
+    newRow.insertCell(5).innerHTML = i.course.areas;
+    newRow.insertCell(6).innerHTML = i.course.txtarea;
+    newRow.insertCell(7).innerHTML = `<button onclick="edit()">Edit</button> 
+                                   <button onclick="remove()">Delete</button>`;
+
+    
+            }
+        }
+    }
+}
+
+// Edit function
+
+function edit()
+{
+    var sessionData=JSON.parse(sessionStorage.getItem("user"))  || [];
+    var userDataArray = JSON.parse(localStorage.getItem("details")) || [];
+    for(let j of sessionData){
+        for(let i of userDataArray){
+            if(j.username===i.name ){
+   
+document.getElementById("name").value = i.course.name;
+document.getElementById("email").value =i.course.email;
+document.getElementById("number").value =  i.course.phoneNumber;
+document.getElementById("age").value =i.course.age;
+document.getElementById("role").value = i.course.role;
+document.getElementById("areas").value = i.course.areas;
+document.getElementById("txtarea").value = i.course.txtarea;
+            }
+        }
+    }
+}
+
+// Delete function
+function remove() {
+    var sessionData=JSON.parse(sessionStorage.getItem("user"))  || [];
+    var userDataArray = JSON.parse(localStorage.getItem("details")) || [];
+    for(let j of sessionData){
+        for(let i of userDataArray){
+            if(j.username===i.name){
+                i.course = {}
+            // }
+        }
+    }
+    
+    localStorage.setItem("details", JSON.stringify(userDataArray));
+    var table = document.getElementById("table")
+    var rowCount = table.rows.length;
+    for(var t = rowCount-1;t>0;t--)
+    {
+        table.deleteRow(t)
+    }
+}
+}
+</script>
+</body>
+</html>
